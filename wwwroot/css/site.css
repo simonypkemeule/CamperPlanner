@@ -3,6 +3,22 @@ for details on configuring this project to bundle and minify static web assets. 
 
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@100;400;600;900&display=swap');
 
+.HomePageImage {
+    height: 40vh;
+    border-radius: 20px;
+    background: url(/img/pexels-gya-den-2303781.jpg);
+    
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+.display-4 {
+    color: #3B71FE !important;
+    font-weight: 600 !important;
+}
+
 a.navbar-brand {
     font-weight: 400;
     color: #3B71FE !important;
