@@ -3,7 +3,7 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
-!appsettings.json
+git rm -r --cached appsettings.json
 
 # User-specific files
 *.rsuser
