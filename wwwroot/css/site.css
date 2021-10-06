@@ -3,11 +3,9 @@ for details on configuring this project to bundle and minify static web assets. 
 
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@100;400;600;900&display=swap');
 
-body {
-    font-family: 'Urbanist', sans-serif;
-}
-
 a.navbar-brand {
+    font-weight: 400;
+    color: #3B71FE !important;
     white-space: normal;
     text-align: center;
     word-break: break-all;
@@ -15,7 +13,7 @@ a.navbar-brand {
 
 /* Provide sufficient contrast against white background */
 a {
-    color: #0366d6;
+    color: #3B71FE;
 }
 
 .btn-primary {
@@ -65,8 +63,9 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    font-family: 'Urbanist', sans-serif;
 }
 .footer {
   position: absolute;
