@@ -3,19 +3,36 @@ for details on configuring this project to bundle and minify static web assets. 
 
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@100;400;600;900&display=swap');
 
-.btn {
-    background-color:#3B71FE !important;
-    color: white !important;
+.nav-pills .nav-link.active {
+    background-color: #3B71FE !important;
     font-weight: 600;
 }
 
-.from-control {
-    
+.btn {
+    background-color: #3B71FE !important;
+    color: white !important;
+    font-weight: 600;
+    outline: none !important;
+    border: none !important;
+}
+
+    .btn:hover {
+        box-shadow: 5px 5px 23px 3px rgba(0,0,0,0.10);
+        outline: 1px solid #3B71FE !important;
+        transition: 0.2s;
+    }
+
+.form-control {
+    outline: none !important;
+    border: none !important;
+    box-shadow: 5px 5px 23px 3px rgba(0,0,0,0.05);
+    border-radius: 10px !important;
 }
 
 
 .HomePageImage {
-    min-height: 50vh;
+    height: 50vh;
+    min-height: 300px;
     border-radius: 20px;
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.15)), url(/img/pexels-gya-den-2303781.jpg);
     background-position: center;
@@ -24,7 +41,8 @@ for details on configuring this project to bundle and minify static web assets. 
     position: relative;
 }
 .LoginPageImage {
-    min-height: 50vh;
+    height: 60vh;
+    min-height: 500px;
     border-radius: 20px;
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.2)), url(/img/pexels-tim-gouw-24698.jpg);
     background-position: center;
@@ -37,8 +55,8 @@ for details on configuring this project to bundle and minify static web assets. 
 .form-styling {
     border-radius: 20px;
     background-color: rgb(255, 255, 255, 0.95);
-    -webkit-box-shadow: 5px 5px 23px 3px rgba(0,0,0,0.25);
-    box-shadow: 5px 5px 23px 3px rgba(0,0,0,0.25);
+    -webkit-box-shadow: 5px 5px 23px 3px rgba(0,0,0,0.10);
+    box-shadow: 5px 5px 23px 3px rgba(0,0,0,0.10);
 }
 
 .display-4 {
@@ -109,6 +127,7 @@ body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
     font-family: 'Urbanist', sans-serif;
+    background-color: white !important;
 }
 .footer {
   position: absolute;
