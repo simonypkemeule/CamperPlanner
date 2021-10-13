@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using CamperPlanner.Data.Migrations;
+using CamperPlanner.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,5 +14,10 @@ namespace CamperPlanner.Data
             : base(options)
         {
         }
+
+        public DbSet<Voertuigen> Voertuigen { get; set; }
+
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     }
 }
+    
