@@ -1,4 +1,4 @@
-﻿using CamperPlanner.Data;
+﻿/*using CamperPlanner.Data;
 using CamperPlanner.Models.ViewModels;
 using CamperPlanner.Utility;
 using System;
@@ -39,4 +39,4 @@ namespace CamperPlanner.Services
             throw new NotImplementedException();
         }
     }
-}
+}*/
