@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿  using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CamperPlanner.Models
@@ -10,6 +10,12 @@ namespace CamperPlanner.Models
         [Display(Name = "VoertuigID")]
         public int VoertuigID { get; set; }
 
+        [ForeignKey("Id")]
+        [Display(Name = "UserId")]
+        public string UserId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
+        
+        
         [Required]
         [Column(TypeName = "varchar(50)")]
         [Display(Name = "Kenteken")]

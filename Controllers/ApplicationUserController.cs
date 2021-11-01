@@ -7,90 +7,88 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CamperPlanner.Data;
 using CamperPlanner.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace CamperPlanner.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    public class VoertuigenController : Controller
+    public class ApplicationUserController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public VoertuigenController(ApplicationDbContext context)
+        public ApplicationUserController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Voertuigen
+        // GET: ApplicationsUser
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Voertuigen.ToListAsync());
+            return View(await _context.ApplicationUsers.ToListAsync());
         }
 
-        // GET: Voertuigen/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: ApplicationsUser/Details/5
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var voertuigen = await _context.Voertuigen
-                .FirstOrDefaultAsync(m => m.VoertuigID == id);
-            if (voertuigen == null)
+            var users = await _context.ApplicationUsers
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (users == null)
             {
                 return NotFound();
             }
 
-            return View(voertuigen);
+            return View(users);
         }
 
-        // GET: Voertuigen/Create
+        // GET: ApplicationsUser/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Voertuigen/Create
+        // POST: ApplicationsUser/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("VoertuigID,Kenteken,Type,Lengte,Merk")] Voertuigen voertuigen)
+        public async Task<IActionResult> Create([Bind("Id,Voornaam,Achternaam,Email,PhoneNumber,Bankrekening,Geboortedatum,Postcode,Straatnaam")] ApplicationUser users)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(voertuigen);
+                _context.Add(users);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(voertuigen);
+            return View(users);
         }
 
-        // GET: Voertuigen/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        // GET: ApplicationsUser/Edit/5
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var voertuigen = await _context.Voertuigen.FindAsync(id);
-            if (voertuigen == null)
+            var user = await _context.ApplicationUsers.FindAsync(id);
+            if (user == null)
             {
                 return NotFound();
             }
-            return View(voertuigen);
+            return View(user);
         }
 
-        // POST: Voertuigen/Edit/5
+        // POST: ApplicationsUser/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("VoertuigID,Kenteken,Type,Lengte,Merk")] Voertuigen voertuigen)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Voornaam,Achternaam,Email,PhoneNumber,Bankrekening,Geboortedatum,Postcode,Straatnaam")] ApplicationUser user)
         {
-            if (id != voertuigen.VoertuigID)
+            if (id != user.Id)
             {
                 return NotFound();
             }
@@ -99,12 +97,12 @@ namespace CamperPlanner.Controllers
             {
                 try
                 {
-                    _context.Update(voertuigen);
+                    _context.Update(user);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!VoertuigenExists(voertuigen.VoertuigID))
+                    if (!UserExists(user.Id))
                     {
                         return NotFound();
                     }
@@ -115,41 +113,41 @@ namespace CamperPlanner.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(voertuigen);
+            return View(user);
         }
 
-        // GET: Voertuigen/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // GET: ApplicationsUser/Delete/5
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var voertuigen = await _context.Voertuigen
-                .FirstOrDefaultAsync(m => m.VoertuigID == id);
-            if (voertuigen == null)
+            var users = await _context.ApplicationUsers
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (users == null)
             {
                 return NotFound();
             }
 
-            return View(voertuigen);
+            return View(users);
         }
 
-        // POST: Voertuigen/Delete/5
+        // POST: ApplicationsUser/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var voertuigen = await _context.Voertuigen.FindAsync(id);
-            _context.Voertuigen.Remove(voertuigen);
+            var user = await _context.ApplicationUsers.FindAsync(id);
+            _context.ApplicationUsers.Remove(user);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool VoertuigenExists(int id)
+        private bool UserExists(string id)
         {
-            return _context.Voertuigen.Any(e => e.VoertuigID == id);
+            return _context.ApplicationUsers.Any(e => e.Id == id);
         }
     }
 }
