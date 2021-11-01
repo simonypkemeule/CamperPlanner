@@ -1,0 +1,53 @@
+﻿@model IEnumerable<CamperPlanner.Models.Voertuigen>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Kenteken)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lengte)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Merk)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kenteken)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lengte)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Merk)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.VoertuigID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.VoertuigID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.VoertuigID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
