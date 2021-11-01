@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CamperPlanner.Services
+/*namespace CamperPlanner.Services
 {
     public class AppointmentServices : IAppointmentService
     {
@@ -16,7 +16,7 @@ namespace CamperPlanner.Services
             _db = db;
         }
 
-        public List<DoctorViewModel> GetDoctorList()
+      /*  public List<DoctorViewModel> GetDoctorList()
         {
            
 
@@ -40,3 +40,4 @@ namespace CamperPlanner.Services
         }
     }
 }
+*/

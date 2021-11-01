@@ -34,6 +34,8 @@ namespace CamperPlanner.Models
         [Column(TypeName = "char(1)")]
         [Display(Name = "Stroomaansluiting")]
         public bool Stroomaansluiting { get; set; }
+
         
+
     }
 }
