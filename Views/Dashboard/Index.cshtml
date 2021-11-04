@@ -1,8 +1,19 @@
-﻿@model CamperPlanner.Models.ViewModels.DashboardViewModel
-
-<div class="p-4">
-    <input asp-for="voornaam" disabled />
-    <p>Je bent succesvol ingelogd! <br />In dit scherm kan je al je info vinden!</p>
-    <div class="col-md-6">
-    </div>
-</div>
+﻿@model IEnumerable<CamperPlanner.Models.ViewModels.DashboardViewModel>
+@*
+<table class="table table-striped">
+    <tr>
+        <td>Voornaam</td>
+        <td>Student Stream</td>
+        <td>Favourate Fruite</td>
+        <td>Hobby</td>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Gebruiker.Voornaam</td>
+            <td>@item.Voertuig.VoertuigID</td>
+            <td>@item.Voertuig.Type</td>
+        </tr>
+    }
+</table>
+   *@

@@ -5,12 +5,13 @@
 }
 
 
-<div class="d-flex justify-content-center">
-    <div class="col-md-4 pt-3">
-        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h4>Create a new account.</h4>
-            <hr />
-            <div asp-validation-summary="All" class="text-danger"></div>
+
+
+    <h4>Create a new account.</h4>
+    <hr />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <form class="row" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+        <div class="col">
             <div class="form-group">
                 <label asp-for="Input.Voornaam"></label>
                 <input asp-for="Input.Voornaam" class="form-control" />
@@ -23,7 +24,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Input.Geboortsedatum"></label>
-                <input asp-for="Input.Geboortsedatum" class="form-control" />
+                <input type="date" asp-for="Input.Geboortsedatum" class="form-control" />
                 <span asp-validation-for="Input.Geboortsedatum" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -41,6 +42,8 @@
                 <input asp-for="Input.Huisnummer" class="form-control" />
                 <span asp-validation-for="Input.Huisnummer" class="text-danger"></span>
             </div>
+        </div>
+        <div class="col">
             <div class="form-group">
                 <label asp-for="Input.Bankrekening"></label>
                 <input asp-for="Input.Bankrekening" class="form-control" />
@@ -66,10 +69,17 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-primary">Register</button>
-        </form>
-    </div>
-</div>
+            <div class="form-group">
+                <label asp-for="Input.RoleName"></label>
+                <select class="form-select form-select-md form-control" asp-for="Input.RoleName">
+                    <option value="User">User</option>
+                    <option value="Admin">Admin</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary float-right">Register</button>
+        </div>
+    </form>
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

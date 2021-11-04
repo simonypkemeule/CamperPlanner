@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using CamperPlanner.Data;
 using CamperPlanner.Models;
@@ -13,10 +14,36 @@ namespace CamperPlanner.Controllers
     public class ApplicationUserController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public ApplicationUserController(ApplicationDbContext context)
+        public ApplicationUserController(ApplicationDbContext context, UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager)
         {
             _context = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
+        }
+
+        public async Task<IActionResult> Voertuigen(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var voertuigen = _context.Voertuigen.Include(m => m.ApplicationUser).Where(i => i.ApplicationUser.Id == id).ToList();
+
+            var users = await _context.ApplicationUsers
+                            .FirstOrDefaultAsync(m => m.Id == id);
+            if (users == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.activeUserId = id;
+
+            return View(voertuigen);
         }
 
         // GET: ApplicationsUser
@@ -32,9 +59,8 @@ namespace CamperPlanner.Controllers
             {
                 return NotFound();
             }
-
             var users = await _context.ApplicationUsers
-                .FirstOrDefaultAsync(m => m.Id == id);
+                            .FirstOrDefaultAsync(m => m.Id == id);
             if (users == null)
             {
                 return NotFound();

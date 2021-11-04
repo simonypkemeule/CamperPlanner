@@ -30,6 +30,16 @@
                 <input asp-for="Input.Achternaam" class="form-control" />
                 <span asp-validation-for="Input.Achternaam" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Input.Email"></label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Straatnaam"></label>
+                <input asp-for="Input.Straatnaam" class="form-control" />
+                <span asp-validation-for="Input.Straatnaam" class="text-danger"></span>
+            </div>
             <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
         </form>
     </div>

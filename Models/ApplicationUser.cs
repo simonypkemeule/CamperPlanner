@@ -46,6 +46,8 @@ namespace CamperPlanner.Models
         [Display(Name = "Geboortedatum")]
         public DateTime Geboortedatum { get; set; }
 
+        public List<Voertuigen> Voertuigens { get; set; }
+
 
     }
 }

@@ -10,14 +10,24 @@ namespace CamperPlanner.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
+        public DbSet<Voertuigen> Voertuigen { get; set; }
+
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
+        public DbSet<Contracten> Contracten { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
-
-        public DbSet<Voertuigen> Voertuigen { get; set; }
-
-        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-    }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Voertuigen>()
+                .HasOne(p => p.ApplicationUser)
+                .WithMany(b => b.Voertuigens)
+                .HasForeignKey(p => p.UserId);
+        }
+        }
 }
     

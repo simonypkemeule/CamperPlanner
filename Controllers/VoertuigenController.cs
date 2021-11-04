@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using CamperPlanner.Data;
 using CamperPlanner.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -15,10 +16,15 @@ namespace CamperPlanner.Controllers
     public class VoertuigenController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public VoertuigenController(ApplicationDbContext context)
+        public VoertuigenController(ApplicationDbContext context, UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager)
         {
             _context = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         // GET: Voertuigen
@@ -46,8 +52,9 @@ namespace CamperPlanner.Controllers
         }
 
         // GET: Voertuigen/Create
-        public IActionResult Create()
+        public IActionResult Create(string id)
         {
+            ViewBag.userID = id;  
             return View();
         }
 
@@ -56,7 +63,7 @@ namespace CamperPlanner.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("VoertuigID,Kenteken,Type,Lengte,Merk")] Voertuigen voertuigen)
+        public async Task<IActionResult> Create([Bind("VoertuigID,Kenteken,Type,Lengte,Merk,UserId")] Voertuigen voertuigen)
         {
             if (ModelState.IsValid)
             {
