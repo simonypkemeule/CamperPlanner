@@ -1,37 +1,37 @@
-﻿/*using CamperPlanner.Data;
+﻿using CamperPlanner.Data;
+using CamperPlanner.Models;
 using CamperPlanner.Models.ViewModels;
-using CamperPlanner.Utility;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-/*namespace CamperPlanner.Services
+namespace CamperPlanner.Services
 {
     public class AppointmentServices : IAppointmentService
     {
-        ApplicationDbContext _db;
-        public AppointmentServices(ApplicationDbContext db)
+        private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+
+        public AppointmentServices(ApplicationDbContext context, UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager)
         {
-            _db = db;
+            _context = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
-      /*  public List<DoctorViewModel> GetDoctorList()
+        public List<Voertuigen> GetVoertuigenList()
         {
-           
+            //var user = _userManager.GetUserId(HttpContext.User);
 
-            var doctors = (from user in _db.Users
-                           join userRole in _db.UserRoles on user.Id equals userRole.UserId
-                           join role in _db.Roles.Where(x => x.Name == Helper.Doctor) on userRole.RoleId equals role.Id
-                           select new DoctorViewModel
-                           {
-                               Id = user.Id,
-                               Name = string.IsNullOrEmpty(user.MiddleName) ?
-                           user.FirstName + " " + user.LastName :
-                           user.FirstName + " " + user.MiddleName + " " + user.LastName
-                           }
-                           ).OrderBy(u => u.Name).ToList();
-            return doctors;
+            //var voertuigen = _context.Voertuigen.Include(m => m.ApplicationUser).Where(i => i.ApplicationUser.Id == user).ToList();
+
+            return new List<Voertuigen>();
         }
 
         public List<PatientViewModel> GetPatientList()
@@ -40,4 +40,3 @@ using System.Threading.Tasks;
         }
     }
 }
-*/

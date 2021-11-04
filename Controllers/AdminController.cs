@@ -21,6 +21,7 @@ namespace CamperPlanner.Controllers
         [HttpGet]
         public IActionResult Roles()
         {
+   
             var roles = roleManager.Roles;
             return View(roles);
         }

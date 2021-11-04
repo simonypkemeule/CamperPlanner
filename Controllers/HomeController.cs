@@ -1,4 +1,5 @@
 ﻿using CamperPlanner.Models;
+using CamperPlanner.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,7 +21,7 @@ namespace CamperPlanner.Controllers
 
         public IActionResult Index()
         {
-            return View();
+                    return View();
         }
 
         public IActionResult Privacy()

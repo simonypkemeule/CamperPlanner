@@ -39,7 +39,6 @@ namespace CamperPlanner.Controllers
                 .FirstOrDefaultAsync(m => m.VoertuigID == id);
             if (voertuigen == null)
             {
-                return NotFound();
             }
 
             return View(voertuigen);
