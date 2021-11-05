@@ -28,33 +28,48 @@ namespace CamperPlanner.Controllers
         }
 
         // GET: Voertuigen
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string id)
         {
-            return View(await _context.Voertuigen.ToListAsync());
+            if (id == null)
+            {
+                return View(await _context.Voertuigen
+                    .Include(m => m.ApplicationUser)
+                    .Include(m => m.Contract)
+                    .ToListAsync());
+            }
+            else
+            {
+                ViewBag.activeUserId = id;
+                ViewBag.user =  await _userManager.FindByIdAsync(id);
+                return View(await _context.Voertuigen
+                    .Include(m => m.ApplicationUser)
+                    .Include(m => m.Contract)
+                    .Where(i => i.ApplicationUser.Id == id)
+                    .ToListAsync());
+            }
         }
 
         // GET: Voertuigen/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id, string userId)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
+            ViewBag.userId = userId;
             var voertuigen = await _context.Voertuigen
                 .FirstOrDefaultAsync(m => m.VoertuigID == id);
             if (voertuigen == null)
             {
                 return NotFound();
             }
-
             return View(voertuigen);
         }
 
         // GET: Voertuigen/Create
-        public IActionResult Create(string id)
+        public IActionResult Create(string userId)
         {
-            ViewBag.userID = id;  
+            ViewBag.userID = userId;  
             return View();
         }
 
@@ -63,25 +78,36 @@ namespace CamperPlanner.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("VoertuigID,Kenteken,Type,Lengte,Merk,UserId")] Voertuigen voertuigen)
+        public async Task<IActionResult> Create([Bind("VoertuigID,Kenteken,Type,Lengte,Merk,Stroomaansluiting,UserId")] Voertuigen voertuigen, string userId)
         {
             if (ModelState.IsValid)
             {
+
                 _context.Add(voertuigen);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                var contract = new Contracten
+                {
+                    VoertuigId = voertuigen.VoertuigID,
+                    StartDatum = DateTime.Now.Date,
+                    EindDatum = DateTime.Now.Date.AddYears(1)
+                };
+                _context.Add(contract);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Index", "Voertuigen", new { id = userId});
             }
             return View(voertuigen);
         }
 
         // GET: Voertuigen/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, string userId)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
+            ViewBag.userId = userId;
             var voertuigen = await _context.Voertuigen.FindAsync(id);
             if (voertuigen == null)
             {
@@ -95,13 +121,14 @@ namespace CamperPlanner.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("VoertuigID,Kenteken,Type,Lengte,Merk")] Voertuigen voertuigen)
+        public async Task<IActionResult> Edit(int id, [Bind("VoertuigID,Kenteken,Type,Lengte,Merk,Stroomaansluiting")] Voertuigen voertuigen, string userId)
         {
             if (id != voertuigen.VoertuigID)
             {
                 return NotFound();
             }
 
+            
             if (ModelState.IsValid)
             {
                 try
@@ -120,14 +147,22 @@ namespace CamperPlanner.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                if (userId == null)
+                {
+                    return RedirectToAction(nameof(Index));
+                } else
+                {
+                    return RedirectToAction("Index", "Voertuigen", new { id = userId });
+                }
+                
             }
             return View(voertuigen);
         }
 
         // GET: Voertuigen/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, string userId)
         {
+            ViewBag.userId = userId;
             if (id == null)
             {
                 return NotFound();
@@ -146,12 +181,20 @@ namespace CamperPlanner.Controllers
         // POST: Voertuigen/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, string userId)
         {
+            ViewBag.userId = userId;
             var voertuigen = await _context.Voertuigen.FindAsync(id);
             _context.Voertuigen.Remove(voertuigen);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            if (userId == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return RedirectToAction("Index", "Voertuigen", new { id = userId });
+            }
         }
 
         private bool VoertuigenExists(int id)

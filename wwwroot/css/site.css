@@ -89,6 +89,17 @@ a {
   border-color: #1861ac;
 }
 
+.iconText {
+    font-family: 'Urbanist', sans-serif !important;
+}
+
+/*Colors*/
+
+.green {
+    color: #5AC181;
+}
+
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {

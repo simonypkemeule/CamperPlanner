@@ -11,21 +11,17 @@ namespace CamperPlanner.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Display(Name = "ContractIs")]
+        [Display(Name = "ContractId")]
         public int ContractId { get; set; }
 
-        [Required]
-        [Column(TypeName = "varchar(50)")]
-        [Display(Name = "Start datum")]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Startdatum")]
         public DateTime StartDatum { get; set; }
 
-        [Required]
-        [Column(TypeName = "varchar(50)")]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Einddatum")]
         public DateTime EindDatum { get; set; }
-
-        public string UserId { get; set; }
-        public string VoertuigId { get; set; }
-        public Voertuigen Voertuigen { get; set; }
+        public int VoertuigId { get; set; }
+        public Voertuigen Voertuig { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using CamperPlanner.Data.Migrations;
+﻿//using CamperPlanner.Data.Migrations;
 using CamperPlanner.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -23,10 +23,16 @@ namespace CamperPlanner.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Voertuigen>()
                 .HasOne(p => p.ApplicationUser)
                 .WithMany(b => b.Voertuigens)
                 .HasForeignKey(p => p.UserId);
+
+            modelBuilder.Entity<Contracten>()
+                .HasOne<Voertuigen>(p => p.Voertuig)
+                .WithOne(b => b.Contract)
+                .HasForeignKey<Contracten>(p => p.VoertuigId);
         }
         }
 }
