@@ -48,6 +48,7 @@ namespace CamperPlanner.Controllers
 
                 dashboardViewModel.user = await _userManager.FindByIdAsync(userId);
 
+                ViewBag.Role = await _userManager.GetRolesAsync(user);
                 ViewBag.activeUserId = userId;
                 ViewBag.user = await _userManager.FindByIdAsync(userId);
 
