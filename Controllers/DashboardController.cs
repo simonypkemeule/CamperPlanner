@@ -9,13 +9,14 @@ using CamperPlanner.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CamperPlanner.Controllers
 {
+    [Authorize(Roles = "User")]
     public class DashboardController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
 
         
