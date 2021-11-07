@@ -64,9 +64,14 @@
                     <i class="fa fa-user fa-2x" style="display: inline-block"></i>
                 </div>
                 <div class="col">
-                    <h5>
-                        Gebruikers
-                    </h5>
+                    <a asp-controller="ApplicationUser" asp-action="Index">
+                        <h5>Gebruikers</h5>
+                    </a>
+                </div>
+                <div class="col float-right">
+                    <a class="float-right" asp-controller="ApplicationUser" asp-action="Create">
+                        <i class="fa fa-plus-square float-right green"></i>
+                    </a>
                 </div>
             </div>
             <table class="table">
@@ -114,9 +119,14 @@
                     <i class="fa fa-caravan fa-2x" style="display: inline-block"></i>
                 </div>
                 <div class="col">
-                    <h5>
-                        Voertuigen
-                    </h5>
+                    <a asp-controller="Voertuigen" asp-action="Index">
+                        <h5>Voertuigen</h5>
+                    </a>
+                </div>
+                <div class="col float-right">
+                    <a class="float-right" asp-controller="Voertuigen" asp-action="Create">
+                        <i class="fa fa-plus-square float-right green"></i>
+                    </a>
                 </div>
             </div>
             <table class="table">
@@ -165,9 +175,9 @@
                     <i class="fa fa-file-contract fa-2x" style="display: inline-block"></i>
                 </div>
                 <div class="col">
-                    <h5>
-                        Contracten
-                    </h5>
+                    <a>
+                        <h5>Contracten</h5>
+                    </a>
                 </div>
             </div>
             <table class="table">

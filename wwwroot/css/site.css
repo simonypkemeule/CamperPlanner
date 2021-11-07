@@ -29,6 +29,17 @@ for details on configuring this project to bundle and minify static web assets. 
     border-radius: 10px !important;
 }
 
+a {
+    color: inherit !important;
+    text-decoration: none !important;
+}
+
+    a:hover {
+        color: inherit !important;
+        text-decoration: none !important;
+        cursor: pointer !important;
+    }
+
 
 .HomePageImage {
     height: 50vh;
