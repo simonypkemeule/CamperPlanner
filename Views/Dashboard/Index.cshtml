@@ -1,4 +1,7 @@
 ﻿@model CamperPlanner.Models.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
 <h4>Welkom @Html.DisplayFor(model => model.user.Voornaam)!</h4>
 <h6>Je bent succesvol ingelogd!</h6>
 <hr />
@@ -63,201 +66,201 @@
     </div>
 </div>
 <div class="row mt-3">
-        <div class="col form-styling p-3 mr-3">
-            <div class="row p-1">
-                <div class="col-1 green">
-                    <i class="fa fa-user fa-2x" style="display: inline-block"></i>
-                </div>
-                <div class="col">
-                    <h5>
-                        Je gegevens
-                    </h5>
-                </div>
+    <div class="col form-styling p-3 mr-3">
+        <div class="row p-1">
+            <div class="col-1 green">
+                <i class="fa fa-user fa-2x" style="display: inline-block"></i>
             </div>
-            <hr class="m-1" />
-            <dl class="row">
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.user.Voornaam)
-                </dt>
-                <dd class="col-sm-10 text-right">
-                    @Html.DisplayFor(model => model.user.Voornaam)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.user.Achternaam)
-                </dt>
-                <dd class="col-sm-10 text-right">
-                    @Html.DisplayFor(model => model.user.Achternaam)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.user.Email)
-                </dt>
-                <dd class="col-sm-10 text-right">
-                    @Html.DisplayFor(model => model.user.Email)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.user.Geboortedatum)
-                </dt>
-                <dd class="col-sm-10 text-right">
-                    @Html.DisplayFor(model => model.user.Geboortedatum)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.user.Bankrekening)
-                </dt>
-                <dd class="col-sm-10 text-right">
-                    @Html.DisplayFor(model => model.user.Bankrekening)
-                </dd>
-            </dl>
-        </div>
-        <div class="col form-styling p-3">
-            <div class="row p-1">
-                <div class="col-1 green">
-                    <i class="fa fa-caravan fa-2x" style="display: inline-block"></i>
-                </div>
-                <div class="col">
-                    <h5>
-                        Je voertuigen
-                    </h5>
-                </div>
+            <div class="col">
+                <h5>
+                    Je gegevens
+                </h5>
             </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Voertuigens[0].Kenteken)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Voertuigens[0].Type)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Voertuigens[0].Lengte)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Voertuigens[0].Merk)
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Voertuigens)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Kenteken)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Type)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Lengte)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Merk)
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
         </div>
+        <hr class="m-1" />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.user.Voornaam)
+            </dt>
+            <dd class="col-sm-10 text-right">
+                @Html.DisplayFor(model => model.user.Voornaam)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.user.Achternaam)
+            </dt>
+            <dd class="col-sm-10 text-right">
+                @Html.DisplayFor(model => model.user.Achternaam)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.user.Email)
+            </dt>
+            <dd class="col-sm-10 text-right">
+                @Html.DisplayFor(model => model.user.Email)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.user.Geboortedatum)
+            </dt>
+            <dd class="col-sm-10 text-right">
+                @Html.DisplayFor(model => model.user.Geboortedatum)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.user.Bankrekening)
+            </dt>
+            <dd class="col-sm-10 text-right">
+                @Html.DisplayFor(model => model.user.Bankrekening)
+            </dd>
+        </dl>
     </div>
-    <div class="row mt-3">
-        <div class="col form-styling p-3 mr-3">
-            <div class="row p-1">
-                <div class="col-1 green">
-                    <i class="fa fa-file-contract fa-2x" style="display: inline-block"></i>
-                </div>
-                <div class="col">
-                    <h5>
-                        Je contracten
-                    </h5>
-                </div>
+    <div class="col form-styling p-3">
+        <div class="row p-1">
+            <div class="col-1 green">
+                <i class="fa fa-caravan fa-2x" style="display: inline-block"></i>
             </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.contracten[0].StartDatum)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.contracten[0].EindDatum)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Voertuigens[0].Kenteken)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Voertuigens[0].VoertuigID)
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.contracten)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.StartDatum)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.EindDatum)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Voertuig.Kenteken)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Voertuig.VoertuigID)
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-        <div class="col form-styling p-3">
-            <div class="row p-1">
-                <div class="col-1 green">
-                    <i class="fa fa-money-bill-wave fa-2x" style="display: inline-block"></i>
-                </div>
-                <div class="col">
-                    <h5>
-                        Je facturen
-                    </h5>
-                </div>
+            <div class="col">
+                <h5>
+                    Je voertuigen
+                </h5>
             </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.contracten[0].StartDatum)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.contracten[0].EindDatum)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Voertuigens[0].Kenteken)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Voertuigens[0].VoertuigID)
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.contracten)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.StartDatum)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.EindDatum)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Voertuig.Kenteken)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Voertuig.VoertuigID)
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
         </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Voertuigens[0].Kenteken)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Voertuigens[0].Type)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Voertuigens[0].Lengte)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Voertuigens[0].Merk)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Voertuigens)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Kenteken)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Type)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Lengte)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Merk)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
+</div>
+<div class="row mt-3">
+    <div class="col form-styling p-3 mr-3">
+        <div class="row p-1">
+            <div class="col-1 green">
+                <i class="fa fa-file-contract fa-2x" style="display: inline-block"></i>
+            </div>
+            <div class="col">
+                <h5>
+                    Je contracten
+                </h5>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.contracten[0].StartDatum)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.contracten[0].EindDatum)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Voertuigens[0].Kenteken)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Voertuigens[0].VoertuigID)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.contracten)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartDatum)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EindDatum)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Voertuig.Kenteken)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Voertuig.VoertuigID)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col form-styling p-3">
+        <div class="row p-1">
+            <div class="col-1 green">
+                <i class="fa fa-money-bill-wave fa-2x" style="display: inline-block"></i>
+            </div>
+            <div class="col">
+                <h5>
+                    Je facturen
+                </h5>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.contracten[0].StartDatum)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.contracten[0].EindDatum)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Voertuigens[0].Kenteken)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Voertuigens[0].VoertuigID)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.contracten)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartDatum)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EindDatum)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Voertuig.Kenteken)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Voertuig.VoertuigID)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
 
 

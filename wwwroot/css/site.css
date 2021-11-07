@@ -127,7 +127,7 @@ a {
 /*Colors*/
 
 .green {
-    color: #5AC181;
+    color: #5AC181 !important;
 }
 
 

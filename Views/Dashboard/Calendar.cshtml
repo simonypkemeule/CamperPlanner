@@ -1,7 +1,11 @@
-﻿<partial name="_AddEditAppointment" />
+﻿@{
+    ViewData["Title"] = "Calendar";
+}
 
-@section Scripts{ 
-<script src="~/js/script-custom-calendar.js"></script>
+<partial name="_AddEditAppointment" />
+
+@section Scripts{
+    <script src="~/js/script-custom-calendar.js"></script>
 }
 
 <div id="calendar"></div>
