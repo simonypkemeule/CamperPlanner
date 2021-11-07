@@ -42,7 +42,52 @@
         </dd>
     </dl>
 </div>
+@*
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.ApplicationUser.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Voertuigen.Kenteken)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Voertuigen.Type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Voertuigen.Lengte)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Voertuigen.Merk)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Voertuigen)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kenteken)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lengte)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Merk)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.VoertuigID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.VoertuigID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.VoertuigID">Delete</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
 </div>
+    *@

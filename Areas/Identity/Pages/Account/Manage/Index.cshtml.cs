@@ -39,6 +39,11 @@ namespace CamperPlanner.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Achternaam")]
             public string Achternaam { get; set; }
 
+            [Display(Name = "Email")]
+            public string Email { get; set; }
+            [Display(Name = "Straatnaam")]
+            public string Straatnaam { get; set; }
+
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
@@ -50,6 +55,8 @@ namespace CamperPlanner.Areas.Identity.Pages.Account.Manage
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             var voornaam = user.Voornaam;
             var achternaam = user.Achternaam;
+            var email = user.Email;
+            var straatnaam = user.Straatnaam;
 
             Username = userName;
 
@@ -57,6 +64,8 @@ namespace CamperPlanner.Areas.Identity.Pages.Account.Manage
             {
                 Voornaam = voornaam,
                 Achternaam = achternaam,
+                Email = email,
+                Straatnaam = straatnaam,
                 PhoneNumber = phoneNumber
             };
         }
@@ -89,6 +98,8 @@ namespace CamperPlanner.Areas.Identity.Pages.Account.Manage
 
             var voornaam = user.Voornaam;
             var achternaam = user.Achternaam;
+            var email = user.Email;
+            var straatnaam = user.Straatnaam;
             if (Input.Voornaam != voornaam)
             {
                 user.Voornaam = Input.Voornaam;
@@ -99,7 +110,16 @@ namespace CamperPlanner.Areas.Identity.Pages.Account.Manage
                 user.Achternaam = Input.Achternaam;
                 await _userManager.UpdateAsync(user);
             }
-
+            if (Input.Email != email)
+            {
+                user.Email = Input.Email;
+                await _userManager.UpdateAsync(user);
+            }
+            if (Input.Straatnaam != straatnaam)
+            {
+                user.Straatnaam = Input.Straatnaam;
+                await _userManager.UpdateAsync(user);
+            }
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)
             {

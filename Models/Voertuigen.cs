@@ -9,12 +9,6 @@ namespace CamperPlanner.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Display(Name = "VoertuigID")]
         public int VoertuigID { get; set; }
-
-        [ForeignKey("Id")]
-        [Display(Name = "UserId")]
-        public string UserId { get; set; }
-        public ApplicationUser ApplicationUser { get; set; }
-        
         
         [Required]
         [Column(TypeName = "varchar(50)")]
@@ -41,7 +35,10 @@ namespace CamperPlanner.Models
         [Display(Name = "Stroomaansluiting")]
         public bool Stroomaansluiting { get; set; }
 
-        
+        [Column(TypeName = "varchar(50)")]
+        [Display(Name = "UserId")]
+        public string UserId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
 
     }
 }
