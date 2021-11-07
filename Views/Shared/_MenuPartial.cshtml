@@ -1,12 +1,32 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@using System.Security.Claims
+@{
+
+       
+}
 
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
-        </li>
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var user = await UserManager.FindByIdAsync(userId);
+
+        var role = await UserManager.GetRolesAsync(user);
+
+        @if (role[0] == "Admin")
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Adminpanel</a>
+            </li>
+        }
+
+        @if (role[0] == "User")
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+            </li>
+        }
     }
 </ul>
