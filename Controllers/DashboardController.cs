@@ -8,6 +8,9 @@ using CamperPlanner.Models.ViewModels;
 using CamperPlanner.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CamperPlanner.Controllers
 {
