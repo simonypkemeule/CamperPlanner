@@ -1,4 +1,5 @@
-﻿using CamperPlanner.Models.ViewModels;
+﻿using CamperPlanner.Models;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +9,6 @@ namespace CamperPlanner.Services
 {
     public interface IAppointmentService
     {
-        public List<DoctorViewModel> GetDoctorList();
-        public List<PatientViewModel> GetPatientList();
-
+        public List<Voertuigen> GetVoertuigenList();
     }
 }
