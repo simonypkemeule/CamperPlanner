@@ -17,9 +17,14 @@
                     <div class="form-group">
                         <label for="UserId">Selecteer een auto</label>
                         <select id="UserId"
-                                asp-items="@(new SelectList(ViewBag.VoertuigenList, "Id", "Merk"))"
+                                asp-items="@(new SelectList(ViewBag.voertuigenList, "Value", "Text"))"
                                 class="form-control"></select>
                     </div>
+                    <input type="hidden" id="id"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnClose" class="btn btn-secondary" onclick="onCloseModal();">Sluit</button>&nbsp;
+                    <button type="button" id="btnSubmit" class="btn btn-succes" onclick="onSubmitForm();">Opslaan</button>
                 </div>
             </form>
         </div>

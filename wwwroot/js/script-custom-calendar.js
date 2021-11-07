@@ -32,3 +32,10 @@ function InitializeCalendar() {
 function onShowModal(obj, isEventDetail) {
     $("#appointmentInput").modal("show");
 }
+function onCloseModal() {
+    $("#appointmentInput").modal("hide");
+}
+
+function onSubmitForm() {
+    //TODO: Add code to save the appointment to the database
+}
