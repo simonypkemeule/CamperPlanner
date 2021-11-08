@@ -1,4 +1,5 @@
-﻿using CamperPlanner.Models;
+﻿using CamperPlanner.Data.Migrations;
+using CamperPlanner.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -14,8 +15,6 @@ namespace CamperPlanner.Data
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         public DbSet<Contracten> Contracten { get; set; }
-
-        public DbSet<Appointment> Appointments { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
