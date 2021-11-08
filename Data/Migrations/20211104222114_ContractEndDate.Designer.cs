@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace CamperPlanner.Data.Migrations
+namespace CamperPlanner.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211013120655_VoertuigenMigration")]
-    partial class VoertuigenMigration
+    [Migration("20211104222114_ContractEndDate")]
+    partial class ContractEndDate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,30 @@ namespace CamperPlanner.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("CamperPlanner.Models.Contracten", b =>
+                {
+                    b.Property<int>("ContractId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("EindDatum")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartDatum")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("VoertuigId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ContractId");
+
+                    b.HasIndex("VoertuigId")
+                        .IsUnique();
+
+                    b.ToTable("Contracten");
+                });
 
             modelBuilder.Entity("CamperPlanner.Models.Voertuigen", b =>
                 {
@@ -39,11 +63,20 @@ namespace CamperPlanner.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
+                    b.Property<string>("Stroomaansluiting")
+                        .IsRequired()
+                        .HasColumnType("char(1)");
+
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("VoertuigID");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Voertuigen");
                 });
@@ -111,6 +144,10 @@ namespace CamperPlanner.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -162,6 +199,8 @@ namespace CamperPlanner.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -248,6 +287,59 @@ namespace CamperPlanner.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("CamperPlanner.Models.ApplicationUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<string>("Achternaam")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Bankrekening")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<DateTime>("Geboortedatum")
+                        .HasColumnType("Date");
+
+                    b.Property<int>("Huisnummer")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Postcode")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Straatnaam")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Voornaam")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)");
+
+                    b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
+            modelBuilder.Entity("CamperPlanner.Models.Contracten", b =>
+                {
+                    b.HasOne("CamperPlanner.Models.Voertuigen", "Voertuig")
+                        .WithOne("Contract")
+                        .HasForeignKey("CamperPlanner.Models.Contracten", "VoertuigId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Voertuig");
+                });
+
+            modelBuilder.Entity("CamperPlanner.Models.Voertuigen", b =>
+                {
+                    b.HasOne("CamperPlanner.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("Voertuigens")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("ApplicationUser");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -297,6 +389,16 @@ namespace CamperPlanner.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("CamperPlanner.Models.Voertuigen", b =>
+                {
+                    b.Navigation("Contract");
+                });
+
+            modelBuilder.Entity("CamperPlanner.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("Voertuigens");
                 });
 #pragma warning restore 612, 618
         }

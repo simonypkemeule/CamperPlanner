@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CamperPlanner.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211031131442_ForeignKey")]
-    partial class ForeignKey
+    [Migration("20211102153327_Test")]
+    partial class Test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

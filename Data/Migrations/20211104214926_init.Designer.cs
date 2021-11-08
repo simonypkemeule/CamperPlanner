@@ -4,14 +4,16 @@ using CamperPlanner.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CamperPlanner.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211104214926_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,11 +28,9 @@ namespace CamperPlanner.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("EindDatum")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("StartDatum")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("StartDatum")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)");
 
                     b.Property<int>("VoertuigId")
                         .HasColumnType("int");
@@ -62,7 +62,8 @@ namespace CamperPlanner.Migrations
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("Stroomaansluiting")
-                        .HasColumnType("varchar(4)");
+                        .IsRequired()
+                        .HasColumnType("char(1)");
 
                     b.Property<string>("Type")
                         .IsRequired()

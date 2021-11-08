@@ -8,6 +8,26 @@ for details on configuring this project to bundle and minify static web assets. 
     font-weight: 600;
 }
 
+.fc-button-primary {
+    background-color: #3B71FE !important;
+    color: white !important;
+    font-weight: 600;
+    outline: none !important;
+    border: none !important;
+}
+
+.fc-view-harness {
+    border-radius: 20px;
+    background-color: rgb(255, 255, 255, 0.95);
+    -webkit-box-shadow: 5px 5px 23px 3px rgba(0,0,0,0.10);
+    box-shadow: 5px 5px 23px 3px rgba(0,0,0,0.10);
+}
+
+.fc .fc-scrollgrid-liquid {
+    border: 0px !important;
+    padding: 1em !important;
+}
+
 .btn {
     background-color: #3B71FE !important;
     color: white !important;
@@ -28,6 +48,17 @@ for details on configuring this project to bundle and minify static web assets. 
     box-shadow: 5px 5px 23px 3px rgba(0,0,0,0.05);
     border-radius: 10px !important;
 }
+
+a {
+    color: inherit !important;
+    text-decoration: none !important;
+}
+
+    a:hover {
+        color: inherit !important;
+        text-decoration: none !important;
+        cursor: pointer !important;
+    }
 
 
 .HomePageImage {
@@ -88,6 +119,17 @@ a {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+.iconText {
+    font-family: 'Urbanist', sans-serif !important;
+}
+
+/*Colors*/
+
+.green {
+    color: #5AC181 !important;
+}
+
 
 /* Sticky footer styles
 -------------------------------------------------- */

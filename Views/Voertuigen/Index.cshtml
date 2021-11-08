@@ -1,14 +1,24 @@
 ﻿@model IEnumerable<CamperPlanner.Models.Voertuigen>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Voertuigen";
 }
 
-<h1>Index</h1>
+    @if (ViewBag.activeUserId == null)
+    {
+        <h1>Alle Voertuigen</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+    }
+    else
+    {
+    <h1>Voertuigen van @ViewBag.user.Voornaam @ViewBag.user.Achternaam</h1>
+    <p>@ViewBag.user.Email</p>
+    }
+
+    <p>
+        <a asp-action="Create" asp-route-userId="@ViewBag.activeUserId">Create New</a>
+    </p>
+
 <table class="table">
     <thead>
         <tr>
@@ -22,13 +32,18 @@
                 @Html.DisplayNameFor(model => model.Lengte)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Merk)
+                @Html.DisplayNameFor(model => model.Contract.StartDatum)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.Contract.EindDatum)
+            </th>
+            <th>
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Kenteken)
@@ -40,14 +55,17 @@
                 @Html.DisplayFor(modelItem => item.Lengte)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Merk)
+                @Html.DisplayFor(modelItem => item.Contract.StartDatum)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.VoertuigID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.VoertuigID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.VoertuigID">Delete</a>
+                @Html.DisplayFor(modelItem => item.Contract.EindDatum)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.VoertuigID" asp-route-userId="@ViewBag.activeUserId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.VoertuigID" asp-route-userId="@ViewBag.activeUserId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.VoertuigID" asp-route-userId="@ViewBag.activeUserId">Delete</a>
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>

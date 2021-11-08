@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CamperPlanner.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211101132651_ForeignKeyUserId")]
-    partial class ForeignKeyUserId
+    [Migration("20211014102337_CamperPlanner")]
+    partial class CamperPlanner
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,12 +47,7 @@ namespace CamperPlanner.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("VoertuigID");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Voertuigen");
                 });
@@ -296,15 +291,6 @@ namespace CamperPlanner.Data.Migrations
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
-            modelBuilder.Entity("CamperPlanner.Models.Voertuigen", b =>
-                {
-                    b.HasOne("CamperPlanner.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("Voertuigens")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("ApplicationUser");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -354,11 +340,6 @@ namespace CamperPlanner.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("CamperPlanner.Models.ApplicationUser", b =>
-                {
-                    b.Navigation("Voertuigens");
                 });
 #pragma warning restore 612, 618
         }

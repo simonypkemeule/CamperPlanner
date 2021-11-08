@@ -82,6 +82,7 @@ namespace CamperPlanner.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
+
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);

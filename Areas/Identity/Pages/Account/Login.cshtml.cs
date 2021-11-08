@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using CamperPlanner.Models;
+using System.Security.Claims;
 
 namespace CamperPlanner.Areas.Identity.Pages.Account
 {
@@ -85,6 +86,15 @@ namespace CamperPlanner.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    var user = await _userManager.FindByEmailAsync(Input.Email);
+                    var role = await _userManager.GetRolesAsync(user);
+
+                    //Checks if the user is an admin
+                    if ( role[0] == "Admin")
+                    {
+                        return RedirectToAction("Index", "Admin");
+                    }
+
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }

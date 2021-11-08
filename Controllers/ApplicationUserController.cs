@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using CamperPlanner.Data;
 using CamperPlanner.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace CamperPlanner.Controllers
 {
@@ -23,27 +24,6 @@ namespace CamperPlanner.Controllers
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
-        }
-
-        public async Task<IActionResult> Voertuigen(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var voertuigen = _context.Voertuigen.Include(m => m.ApplicationUser).Where(i => i.ApplicationUser.Id == id).ToList();
-
-            var users = await _context.ApplicationUsers
-                            .FirstOrDefaultAsync(m => m.Id == id);
-            if (users == null)
-            {
-                return NotFound();
-            }
-
-            ViewBag.activeUserId = id;
-
-            return View(voertuigen);
         }
 
         // GET: ApplicationsUser
@@ -92,6 +72,52 @@ namespace CamperPlanner.Controllers
         }
 
         // GET: ApplicationsUser/Edit/5
+
+        public string Username { get; set; }
+
+        [TempData]
+        public string StatusMessage { get; set; }
+        public InputModel Input { get; set; }
+
+        public class InputModel
+        {
+            [Display(Name = "Voornaam")]
+            public string Voornaam { get; set; }
+
+            [Display(Name = "Achternaam")]
+            public string Achternaam { get; set; }
+
+            [Display(Name = "Email")]
+            public string Email { get; set; }
+            [Display(Name = "Straatnaam")]
+            public string Straatnaam { get; set; }
+
+            [Phone]
+            [Display(Name = "Phone number")]
+            public string PhoneNumber { get; set; }
+        }
+
+        private async Task LoadAsync(ApplicationUser user)
+        {
+            var userName = await _userManager.GetUserNameAsync(user);
+            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var voornaam = user.Voornaam;
+            var achternaam = user.Achternaam;
+            var email = user.Email;
+            var straatnaam = user.Straatnaam;
+
+            Username = userName;
+
+            Input = new InputModel
+            {
+                Voornaam = voornaam,
+                Achternaam = achternaam,
+                Email = email,
+                Straatnaam = straatnaam,
+                PhoneNumber = phoneNumber
+            };
+        }
+
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -119,25 +145,45 @@ namespace CamperPlanner.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                try
+                await LoadAsync(user);
+                return View();
+            }
+
+            var voornaam = user.Voornaam;
+            var achternaam = user.Achternaam;
+            var email = user.Email;
+            var straatnaam = user.Straatnaam;
+            if (Input.Voornaam != voornaam)
+            {
+                user.Voornaam = Input.Voornaam;
+                await _userManager.UpdateAsync(user);
+            }
+            if (Input.Achternaam != achternaam)
+            {
+                user.Achternaam = Input.Achternaam;
+                await _userManager.UpdateAsync(user);
+            }
+            if (Input.Email != email)
+            {
+                user.Email = Input.Email;
+                await _userManager.UpdateAsync(user);
+            }
+            if (Input.Straatnaam != straatnaam)
+            {
+                user.Straatnaam = Input.Straatnaam;
+                await _userManager.UpdateAsync(user);
+            }
+            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            if (Input.PhoneNumber != phoneNumber)
+            {
+                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
+                if (!setPhoneResult.Succeeded)
                 {
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
+                    StatusMessage = "Unexpected error when trying to set phone number.";
+                    return RedirectToAction("Index", "Voertuigen", new { id = id });
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(user.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
             }
             return View(user);
         }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CamperPlanner.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211013134101_ApplicationUserMigration")]
-    partial class ApplicationUserMigration
+    [Migration("20211101124315_applicationusers")]
+    partial class applicationusers
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,6 +27,9 @@ namespace CamperPlanner.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Kenteken")
                         .IsRequired()
@@ -47,7 +50,12 @@ namespace CamperPlanner.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("VoertuigID");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Voertuigen");
                 });
@@ -289,6 +297,15 @@ namespace CamperPlanner.Data.Migrations
                         .HasColumnType("varchar(50)");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
+            modelBuilder.Entity("CamperPlanner.Models.Voertuigen", b =>
+                {
+                    b.HasOne("CamperPlanner.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
