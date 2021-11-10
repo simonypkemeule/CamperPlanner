@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using CamperPlanner.Data;
 using CamperPlanner.Models;
 using System.ComponentModel.DataAnnotations;
+using CamperPlanner.Models.ViewModels;
 
 namespace CamperPlanner.Controllers
 {
@@ -73,64 +74,49 @@ namespace CamperPlanner.Controllers
 
         // GET: ApplicationsUser/Edit/5
 
-        public string Username { get; set; }
-
-        [TempData]
-        public string StatusMessage { get; set; }
-        public InputModel Input { get; set; }
-
-        public class InputModel
-        {
-            [Display(Name = "Voornaam")]
-            public string Voornaam { get; set; }
-
-            [Display(Name = "Achternaam")]
-            public string Achternaam { get; set; }
-
-            [Display(Name = "Email")]
-            public string Email { get; set; }
-            [Display(Name = "Straatnaam")]
-            public string Straatnaam { get; set; }
-
-            [Phone]
-            [Display(Name = "Phone number")]
-            public string PhoneNumber { get; set; }
-        }
-
-        private async Task LoadAsync(ApplicationUser user)
-        {
-            var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            var voornaam = user.Voornaam;
-            var achternaam = user.Achternaam;
-            var email = user.Email;
-            var straatnaam = user.Straatnaam;
-
-            Username = userName;
-
-            Input = new InputModel
-            {
-                Voornaam = voornaam,
-                Achternaam = achternaam,
-                Email = email,
-                Straatnaam = straatnaam,
-                PhoneNumber = phoneNumber
-            };
-        }
+        
 
         public async Task<IActionResult> Edit(string id)
         {
+            
             if (id == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.ApplicationUsers.FindAsync(id);
-            if (user == null)
+            var user = await _userManager.FindByIdAsync(id);
+            var roles = await _userManager.GetRolesAsync(user);
+
+            ViewBag.userFullName = (user.Voornaam + " " + user.Achternaam);
+
+            var userId = user.Id;
+            var userName = await _userManager.GetUserNameAsync(user);
+            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var voornaam = user.Voornaam;
+            var achternaam = user.Achternaam;
+            var geboortedatum = user.Geboortedatum;
+            var postcode = user.Postcode;
+            var huisnummer = user.Huisnummer;
+            var bankrekening = user.Bankrekening;
+            var email = user.Email;
+            var straatnaam = user.Straatnaam;
+
+            EditUserViewModel editUserViewModel = new EditUserViewModel
             {
-                return NotFound();
-            }
-            return View(user);
+                UserId = userId,
+                RoleName = roles.First(),
+                Voornaam = voornaam,
+                Achternaam = achternaam,
+                Geboortedatum = geboortedatum,
+                Postcode = postcode,
+                Huisnummer = huisnummer,
+                Bankrekening = bankrekening,
+                Email = email,
+                Straatnaam = straatnaam,
+                PhoneNumber = phoneNumber
+            };
+
+            return View(editUserViewModel);
         }
 
         // POST: ApplicationsUser/Edit/5
@@ -138,54 +124,35 @@ namespace CamperPlanner.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Voornaam,Achternaam,Email,PhoneNumber,Bankrekening,Geboortedatum,Postcode,Straatnaam")] ApplicationUser user)
+        public async Task<IActionResult> Edit(string id, EditUserViewModel editUserViewModel)
         {
-            if (id != user.Id)
+           
+            var user = await _userManager.FindByIdAsync(editUserViewModel.UserId);
+
+            user.Voornaam = editUserViewModel.Voornaam;
+            user.Achternaam = editUserViewModel.Achternaam;
+            user.Geboortedatum = editUserViewModel.Geboortedatum;
+            user.Postcode = editUserViewModel.Postcode;
+            user.Straatnaam = editUserViewModel.Straatnaam;
+            user.Huisnummer = editUserViewModel.Huisnummer;
+            user.Bankrekening = editUserViewModel.Bankrekening;
+            user.PhoneNumber = editUserViewModel.PhoneNumber;
+            user.Email = editUserViewModel.Email;
+
+            if (editUserViewModel.RoleName == "Admin")
             {
-                return NotFound();
+                await _userManager.AddToRoleAsync(user, "Admin");
+                await _userManager.RemoveFromRoleAsync(user, "User");
+            }
+            if (editUserViewModel.RoleName == "User")
+            {
+                await _userManager.AddToRoleAsync(user, "User");
+                await _userManager.RemoveFromRoleAsync(user, "Admin");
             }
 
-            if (!ModelState.IsValid)
-            {
-                await LoadAsync(user);
-                return View();
-            }
+            await _userManager.UpdateAsync(user);
 
-            var voornaam = user.Voornaam;
-            var achternaam = user.Achternaam;
-            var email = user.Email;
-            var straatnaam = user.Straatnaam;
-            if (Input.Voornaam != voornaam)
-            {
-                user.Voornaam = Input.Voornaam;
-                await _userManager.UpdateAsync(user);
-            }
-            if (Input.Achternaam != achternaam)
-            {
-                user.Achternaam = Input.Achternaam;
-                await _userManager.UpdateAsync(user);
-            }
-            if (Input.Email != email)
-            {
-                user.Email = Input.Email;
-                await _userManager.UpdateAsync(user);
-            }
-            if (Input.Straatnaam != straatnaam)
-            {
-                user.Straatnaam = Input.Straatnaam;
-                await _userManager.UpdateAsync(user);
-            }
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
-            {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
-                    return RedirectToAction("Index", "Voertuigen", new { id = id });
-                }
-            }
-            return View(user);
+            return RedirectToAction("Index", "ApplicationUser");
         }
 
         // GET: ApplicationsUser/Delete/5

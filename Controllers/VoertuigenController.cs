@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using CamperPlanner.Data;
 using CamperPlanner.Models;
 using Microsoft.AspNetCore.Authorization;
+using CamperPlanner.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace CamperPlanner.Controllers
 {
@@ -18,13 +20,15 @@ namespace CamperPlanner.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IEmailSender _emailSender;
 
         public VoertuigenController(ApplicationDbContext context, UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager, IEmailSender emailSender)
         {
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
+            _emailSender = emailSender;
         }
 
         // GET: Voertuigen
@@ -93,6 +97,10 @@ namespace CamperPlanner.Controllers
                 };
                 _context.Add(contract);
                 await _context.SaveChangesAsync();
+
+                var user = await _userManager.FindByIdAsync(userId);
+
+                await _emailSender.SendEmailAsync(user.Email, "Voertuig Geregistreerd!", $"Er is een voertuig voor je geregistreerd!"); 
 
                 return RedirectToAction("Index", "Voertuigen", new { id = userId});
             }

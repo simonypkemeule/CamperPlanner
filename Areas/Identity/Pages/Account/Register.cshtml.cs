@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using CamperPlanner.Models;
+using CamperPlanner.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -23,6 +24,7 @@ namespace CamperPlanner.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
@@ -146,10 +148,10 @@ namespace CamperPlanner.Areas.Identity.Pages.Account
                     //Add user to role
                     var role = await _userManager.AddToRoleAsync(user, Input.RoleName);
 
-
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
+                    _userManager.Options.SignIn.RequireConfirmedAccount = false;
+                    
+                    await _emailSender.SendEmailAsync(Input.Email, "Registratie bij CamperPlanner", $"Welkom bij CamperPlanner");
+                    
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });

@@ -31,8 +31,11 @@ namespace CamperPlanner.Areas.Identity.Pages.Account.Manage
         [BindProperty]
         public InputModel Input { get; set; }
 
+
         public class InputModel
         {
+            public string userId { get; set; }
+
             [Display(Name = "Voornaam")]
             public string Voornaam { get; set; }
 
@@ -47,16 +50,20 @@ namespace CamperPlanner.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+
         }
 
         private async Task LoadAsync(ApplicationUser user)
         {
+            var userId = user.Id;
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             var voornaam = user.Voornaam;
             var achternaam = user.Achternaam;
             var email = user.Email;
             var straatnaam = user.Straatnaam;
+
 
             Username = userName;
 
@@ -86,6 +93,7 @@ namespace CamperPlanner.Areas.Identity.Pages.Account.Manage
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);
+
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");

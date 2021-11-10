@@ -1,53 +1,77 @@
-﻿@model CamperPlanner.Models.ApplicationUser
+﻿@model CamperPlanner.Models.ViewModels.EditUserViewModel
 
 @{
     ViewData["Title"] = "Edit";
 }
-
-<h1>Edit</h1>
-
-<h4>Gerbuiker</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+<div class="mt-2 p-3 form-styling" >
+    <h4>@ViewBag.userFullName</h4>
+    <hr />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <form class="row" method="post">
+        <div class="col">
+            <input asp-for="UserId" class="form-control" hidden />
             <div class="form-group">
-                <label asp-for="Voornaam" class="control-label"></label>
+                <label asp-for="Voornaam"></label>
                 <input asp-for="Voornaam" class="form-control" />
                 <span asp-validation-for="Voornaam" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Achternaam" class="control-label"></label>
+                <label asp-for="Achternaam"></label>
                 <input asp-for="Achternaam" class="form-control" />
                 <span asp-validation-for="Achternaam" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <label asp-for="Postcode"></label>
+                <input asp-for="Postcode" class="form-control" />
+                <span asp-validation-for="Postcode" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Straatnaam" class="control-label"></label>
+                <label asp-for="Straatnaam"></label>
                 <input asp-for="Straatnaam" class="form-control" />
                 <span asp-validation-for="Straatnaam" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <label asp-for="Huisnummer"></label>
+                <input asp-for="Huisnummer" class="form-control" />
+                <span asp-validation-for="Huisnummer" class="text-danger"></span>
             </div>
-        </form>
-    </div>
+            <button class="btn btn-secondary" asp-action="Index">Cancel</button>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="Geboortedatum"></label>
+                <input type="date" asp-for="Geboortedatum" class="form-control" />
+                <span asp-validation-for="Geboortedatum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Bankrekening"></label>
+                <input asp-for="Bankrekening" class="form-control" />
+                <span asp-validation-for="Bankrekening" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber"></label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoleName"></label>
+                <select class="form-select form-select-md form-control" asp-for="RoleName">
+                    <option disabled selected hidden>Selecteer een rol</option>
+                    <option value="User">User</option>
+                    <option value="Admin">Admin</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary float-right">Save</button>
+        </div>
+
+    </form>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

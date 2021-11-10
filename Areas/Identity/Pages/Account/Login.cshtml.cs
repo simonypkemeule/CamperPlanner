@@ -94,7 +94,7 @@ namespace CamperPlanner.Areas.Identity.Pages.Account
                     {
                         return RedirectToAction("Index", "Admin");
                     }
-
+                    
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
