@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CamperPlanner.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211104223530_ContractDateTimeFix")]
-    partial class ContractDateTimeFix
+    [Migration("20211108130909_Appointments")]
+    partial class Appointments
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,26 @@ namespace CamperPlanner.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("CamperPlanner.Models.Appointment", b =>
+                {
+                    b.Property<int>("AfspraakId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("BeginDatum")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("VoertuigID")
+                        .HasColumnType("int");
+
+                    b.HasKey("AfspraakId");
+
+                    b.HasIndex("VoertuigID");
+
+                    b.ToTable("Appointments");
+                });
 
             modelBuilder.Entity("CamperPlanner.Models.Contracten", b =>
                 {
@@ -64,8 +84,7 @@ namespace CamperPlanner.Migrations
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("Stroomaansluiting")
-                        .IsRequired()
-                        .HasColumnType("char(1)");
+                        .HasColumnType("varchar(4)");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -320,6 +339,17 @@ namespace CamperPlanner.Migrations
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
+            modelBuilder.Entity("CamperPlanner.Models.Appointment", b =>
+                {
+                    b.HasOne("CamperPlanner.Models.Voertuigen", "Voertuig")
+                        .WithMany("Appointments")
+                        .HasForeignKey("VoertuigID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Voertuig");
+                });
+
             modelBuilder.Entity("CamperPlanner.Models.Contracten", b =>
                 {
                     b.HasOne("CamperPlanner.Models.Voertuigen", "Voertuig")
@@ -393,6 +423,8 @@ namespace CamperPlanner.Migrations
 
             modelBuilder.Entity("CamperPlanner.Models.Voertuigen", b =>
                 {
+                    b.Navigation("Appointments");
+
                     b.Navigation("Contract");
                 });
 

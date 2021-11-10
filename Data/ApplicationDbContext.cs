@@ -16,6 +16,8 @@ namespace CamperPlanner.Data
 
         public DbSet<Contracten> Contracten { get; set; }
 
+        public DbSet<Appointment> Appointments { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -33,6 +35,11 @@ namespace CamperPlanner.Data
                 .HasOne<Voertuigen>(p => p.Voertuig)
                 .WithOne(b => b.Contract)
                 .HasForeignKey<Contracten>(p => p.VoertuigId);
+
+            modelBuilder.Entity<Appointment>()
+               .HasOne(p => p.Voertuig)
+               .WithMany(b => b.Appointments)
+               .HasForeignKey(p => p.VoertuigID);
         }
         }
 }

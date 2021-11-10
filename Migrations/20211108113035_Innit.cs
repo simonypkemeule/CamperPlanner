@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CamperPlanner.Migrations
 {
-    public partial class init : Migration
+    public partial class Innit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -170,7 +170,7 @@ namespace CamperPlanner.Migrations
                     Type = table.Column<string>(type: "varchar(50)", nullable: false),
                     Lengte = table.Column<int>(type: "int", nullable: false),
                     Merk = table.Column<string>(type: "varchar(50)", nullable: false),
-                    Stroomaansluiting = table.Column<string>(type: "char(1)", nullable: false),
+                    Stroomaansluiting = table.Column<string>(type: "varchar(4)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -190,7 +190,8 @@ namespace CamperPlanner.Migrations
                 {
                     ContractId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StartDatum = table.Column<string>(type: "varchar(50)", nullable: false),
+                    StartDatum = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EindDatum = table.Column<DateTime>(type: "datetime2", nullable: false),
                     VoertuigId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

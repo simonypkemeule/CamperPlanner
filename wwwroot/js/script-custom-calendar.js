@@ -1,6 +1,12 @@
-﻿$(document).ready(function () {
+﻿var routeURL = location.protocol + "//" + location.host;
+$(document).ready(function () {
+    $("#appointmentDate").kendoDateTimePicker({
+        value: new Date(),
+        dateInput: true
+    });
     InitializeCalendar();
 });
+
 var calendar;
 function InitializeCalendar() {
     try {
@@ -37,5 +43,33 @@ function onCloseModal() {
 }
 
 function onSubmitForm() {
-    //TODO: Add code to save the appointment to the database
+    var requestData = {
+        Id: parseInt ($("#AfspraakId").val()),
+        Voertuig: $("#VoertuigID").val(),
+        BeginDatum: $("#BeginDatum").val()
+    };
+
+    $.ajax({
+        url: routeURL + "/api/AppointmentApi/SaveCalendarData",
+        type: "POST",
+        data: JSON.stringify(requestData),
+        contentType: "application/json",
+        success: function (response) {
+            console.log(requestData.Voertuig);
+            console.log(requestData.Id);
+            console.log(requestData.BeginDatum);
+            console.log(response.status);
+            if (response.status === 1 || response.status === 2) {
+                $.notify(response.message, "success");
+                onCloseModal();
+
+            } else {
+                $.notify(response.message, "error");
+                
+            }
+        },
+        error: function (xhr) {
+            $.notify("Error", "Foutje");
+        }
+    });
 }

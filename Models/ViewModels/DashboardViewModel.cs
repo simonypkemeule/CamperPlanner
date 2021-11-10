@@ -16,7 +16,7 @@ namespace CamperPlanner.Models.ViewModels
         public List<Voertuigen> Voertuigens { get; set; }
         public List<Contracten> contracten { get; set; }
 
-        //public Appointments appointments { get; set; }
+        //public Appointment appointments { get; set; }
 
     }
 }

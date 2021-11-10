@@ -13,7 +13,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/Frame 3838.png" alt="Logo" style="max-height: 40px"/></a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/Frame 3838.png" alt="Logo" style="max-height: 40px" /></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -35,8 +35,13 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/notify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales/nl.js"></script>
+    <link href="https://kendo.cdn.telerik.com/2021.3.914/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="https://kendo.cdn.telerik.com/2021.3.914/styles/kendo.default.min.css" rel="stylesheet" />
+    @*<script src="https://kendo.cdn.telerik.com/2021.3.914/js/jquery.min.js"></script>*@
+    <script src="https://kendo.cdn.telerik.com/2021.3.914/js/kendo.all.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

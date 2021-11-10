@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -34,9 +35,26 @@ namespace CamperPlanner.Services
             return new List<Voertuigen>();
         }
 
-        public List<PatientViewModel> GetPatientList()
+        public async Task<int> AddUpdate(AppointmentViewModel model)
         {
-            throw new NotImplementedException();
+            var startDate = DateTime.Parse(model.StartDate, CultureInfo.CreateSpecificCulture("en-US"));
+            if (model != null && model.Appointment.AfspraakId > 0)
+            {
+                return 1;
+            }
+            else
+            {
+                Appointment appointment = new Appointment()
+                {
+                    BeginDatum = startDate,
+                    VoertuigID = model.Voertuig.VoertuigID
+                };
+                _context.Appointments.Add(appointment);
+                await _context.SaveChangesAsync();
+                return 2;
+            }
         }
+
+        
     }
 }

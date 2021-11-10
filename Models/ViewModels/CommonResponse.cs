@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace CamperPlanner.Models.ViewModels
 {
-    public class DoctorViewModel
+    public class CommonResponse<T>
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
+        public int Status { get; set; }
+        public string Message { get; set; }
+        public T Dataenum { get; set; }
     }
 }

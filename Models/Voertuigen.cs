@@ -39,5 +39,7 @@ namespace CamperPlanner.Models
         public ApplicationUser ApplicationUser { get; set; }
 
         public Contracten Contract { get; set; }
+
+        public List<Appointment> Appointments { get; set; }
     }
 }
